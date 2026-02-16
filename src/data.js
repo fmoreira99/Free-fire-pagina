@@ -6,7 +6,7 @@ export const articles = [
     author: "BOOYAH Master",
     date: "2026-02-15",
     category: "GUÍAS",
-    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop",
+    image: "https://res.cloudinary.com/dpcl3eztx/image/upload/v1771217288/Gemini_Generated_Image_7zvwom7zvwom7zvw_e3hcrt.png",
     component: "ArticleFreeFire",
     featured: true,
     readTime: "15 min"
@@ -18,7 +18,7 @@ export const articles = [
     author: "ProDeckBuilder",
     date: "2026-02-14",
     category: "ESPORTS",
-    image: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=600&auto=format&fit=crop",
+    image: "https://res.cloudinary.com/dpcl3eztx/image/upload/v1771217678/unnamed_g6yq8e.jpg",
     component: "ArticleClashRoyale",
     featured: true,
     readTime: "18 min"
@@ -30,7 +30,7 @@ export const articles = [
     author: "MetaverseExplorer",
     date: "2026-02-13",
     category: "GUÍAS",
-    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop",
+    image: "https://res.cloudinary.com/dpcl3eztx/image/upload/v1771217964/unnamed_1_rtheen.jpg",
     component: "ArticleRoblox",
     featured: true,
     readTime: "16 min"
@@ -42,7 +42,7 @@ export const articles = [
     author: "GloryKnight",
     date: "2026-02-12",
     category: "ESPORTS",
-    image: "https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?q=80&w=600&auto=format&fit=crop",
+    image: "https://res.cloudinary.com/dpcl3eztx/image/upload/v1771217926/unnamed_2_xak7kw.jpg",
     component: "ArticleHonorOfKings",
     featured: false,
     readTime: "20 min"
@@ -54,7 +54,7 @@ export const articles = [
     author: "TrainerElite",
     date: "2026-02-11",
     category: "TIPS",
-    image: "https://images.unsplash.com/photo-1613771404784-3a5686aa2be3?q=80&w=600&auto=format&fit=crop",
+    image: "https://res.cloudinary.com/dpcl3eztx/image/upload/v1771218205/unnamed_3_nfekl9.jpg",
     component: "ArticlePokemonGO",
     featured: false,
     readTime: "17 min"
@@ -66,7 +66,7 @@ export const articles = [
     author: "BOOYAH Master",
     date: "2077-08-12",
     category: "GUÍAS",
-    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop"
+    image: "https://res.cloudinary.com/dpcl3eztx/image/upload/v1771218549/unnamed_4_grmpdd.jpg"
   },
   {
     id: 2,
@@ -75,7 +75,7 @@ export const articles = [
     author: "ProSniper_FF",
     date: "2077-08-15",
     category: "MAPAS",
-    image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop"
+    image: "https://res.cloudinary.com/dpcl3eztx/image/upload/v1771218697/unnamed_5_dwnxbp.jpg"
   },
   {
     id: 3,
@@ -84,7 +84,7 @@ export const articles = [
     author: "AimGod",
     date: "2077-08-18",
     category: "TIPS",
-    image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=600&auto=format&fit=crop"
+    image: "https://res.cloudinary.com/dpcl3eztx/image/upload/v1771218869/unnamed_6_tyxegk.jpg"
   },
   {
     id: 4,
