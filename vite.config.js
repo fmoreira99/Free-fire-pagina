@@ -6,4 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   base: '/Free-fire-pagina/',
   plugins: [react(), tailwindcss()],
+  build: {
+    outDir: 'docs',
+  },
 })
