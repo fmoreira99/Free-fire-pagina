@@ -1,4 +1,5 @@
 import { Bug, Star, Zap, Shield, Trophy, TrendingUp, Users, Sparkles, Target } from 'lucide-react';
+import AdBanner, { NativeBanner } from '../AdBanner';
 
 export default function ArticlePokemonGO() {
     return (
@@ -114,6 +115,11 @@ export default function ArticlePokemonGO() {
                 </div>
             </section>
 
+            {/* Ad: Mobile Banner */}
+            <div className="flex justify-center my-8">
+                <AdBanner size="320x50" />
+            </div>
+
             {/* Section 3 - IVs */}
             <section className="mb-12">
                 <h2 className="font-[var(--font-display)] text-2xl font-bold text-white mb-4 flex items-center gap-3">
@@ -192,6 +198,11 @@ export default function ArticlePokemonGO() {
                 </div>
             </section>
 
+            {/* Ad: Medium Rectangle */}
+            <div className="flex justify-center my-8">
+                <AdBanner size="300x250" />
+            </div>
+
             {/* Section 5 - Referrals */}
             <section className="mb-12">
                 <h2 className="font-[var(--font-display)] text-2xl font-bold text-white mb-4 flex items-center gap-3">
@@ -255,6 +266,11 @@ export default function ArticlePokemonGO() {
                 </div>
             </section>
 
+            {/* Ad: Full Banner */}
+            <div className="flex justify-center my-8">
+                <AdBanner size="468x60" />
+            </div>
+
             {/* Section 7 - Events */}
             <section className="mb-12">
                 <h2 className="font-[var(--font-display)] text-2xl font-bold text-white mb-4 flex items-center gap-3">
@@ -289,6 +305,12 @@ export default function ArticlePokemonGO() {
                     </table>
                 </div>
             </section>
+
+
+            {/* Native Banner Ad */}
+            <div className="flex justify-center my-8">
+                <NativeBanner />
+            </div>
 
             {/* Conclusion */}
             <section className="mb-12">

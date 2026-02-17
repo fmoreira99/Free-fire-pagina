@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Flame, Crosshair, Swords, User, ChevronLeft, ChevronRight, Trophy, Shield, Zap, Menu, X, Target, ArrowLeft, Clock } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { articles } from './data';
+import AdBanner, { NativeBanner } from './AdBanner';
 import './index.css';
 
 /* ─── Lazy Article Components ─── */
@@ -83,23 +84,15 @@ function Logo({ onClick }) {
 }
 
 /* ─── Ad Slot ─── */
-function AdSlot() {
+function AdSlot({ size = '300x250' }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="my-10 relative overflow-hidden rounded-xl border-2 border-dashed border-gold/20 animate-ad-pulse"
+      className="my-10 flex items-center justify-center"
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-dark-800 via-dark-700 to-dark-800" />
-      <div className="relative flex flex-col items-center justify-center py-10 gap-2">
-        <div className="flex items-center gap-2 text-gold/60">
-          <Zap size={18} />
-          <span className="font-[var(--font-display)] text-sm tracking-[0.3em] uppercase">Espacio Publicitario</span>
-          <Zap size={18} />
-        </div>
-        <p className="text-gold/30 text-xs font-[var(--font-display)]">Tu anuncio aquí • Premium Slot</p>
-      </div>
+      <AdBanner size={size} />
     </motion.div>
   );
 }
@@ -408,8 +401,8 @@ function ArticleDetail({ articleId, onBack }) {
         Volver a Artículos
       </motion.button>
 
-      {/* Ad Slot Top */}
-      <AdSlot />
+      {/* Ad Slot Top – Leaderboard */}
+      <AdSlot size="728x90" />
 
       {/* Article Content */}
       <Suspense fallback={
@@ -425,8 +418,13 @@ function ArticleDetail({ articleId, onBack }) {
         <Component />
       </Suspense>
 
-      {/* Ad Slot Bottom */}
-      <AdSlot />
+      {/* Ad Slot Bottom – Rectangle */}
+      <AdSlot size="300x250" />
+
+      {/* Native Banner Ad */}
+      <div className="my-10 flex items-center justify-center">
+        <NativeBanner />
+      </div>
 
       {/* Related Articles */}
       <div className="mt-16">
@@ -655,7 +653,12 @@ function App() {
               </motion.div>
             )}
 
-            <AdSlot />
+            <AdSlot size="468x60" />
+
+            {/* Native Banner Ad */}
+            <div className="my-6 flex items-center justify-center">
+              <NativeBanner />
+            </div>
 
             <Pagination
               currentPage={currentPage}
@@ -678,6 +681,11 @@ function App() {
           </section>
         )}
       </main>
+
+      {/* Native Banner before footer */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 my-8 flex items-center justify-center">
+        <NativeBanner />
+      </div>
 
       {/* ═══ FOOTER ═══ */}
       <footer className="relative z-10 border-t border-dark-600 mt-16">

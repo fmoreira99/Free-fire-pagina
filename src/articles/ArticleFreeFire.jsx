@@ -1,4 +1,5 @@
 import { Crosshair, Smartphone, Wrench, Gift, TrendingUp, AlertTriangle, CheckCircle, Star, Zap, Shield } from 'lucide-react';
+import AdBanner, { NativeBanner } from '../AdBanner';
 
 export default function ArticleFreeFire() {
     return (
@@ -116,6 +117,11 @@ export default function ArticleFreeFire() {
                 </div>
             </section>
 
+            {/* Ad: Mobile Banner */}
+            <div className="flex justify-center my-8">
+                <AdBanner size="320x50" />
+            </div>
+
             {/* Section 3 */}
             <section className="mb-12">
                 <h2 className="font-[var(--font-display)] text-2xl font-bold text-white mb-4 flex items-center gap-3">
@@ -208,6 +214,11 @@ export default function ArticleFreeFire() {
                 </ol>
             </section>
 
+            {/* Ad: Medium Rectangle */}
+            <div className="flex justify-center my-8">
+                <AdBanner size="300x250" />
+            </div>
+
             {/* Section 5 - Agenda */}
             <section className="mb-12">
                 <h2 className="font-[var(--font-display)] text-2xl font-bold text-white mb-4 flex items-center gap-3">
@@ -292,6 +303,11 @@ export default function ArticleFreeFire() {
                 </div>
             </section>
 
+            {/* Ad: Full Banner */}
+            <div className="flex justify-center my-8">
+                <AdBanner size="468x60" />
+            </div>
+
             {/* Section 7 - Mantenimiento */}
             <section className="mb-12">
                 <h2 className="font-[var(--font-display)] text-2xl font-bold text-white mb-4 flex items-center gap-3">
@@ -320,6 +336,12 @@ export default function ArticleFreeFire() {
                     ))}
                 </div>
             </section>
+
+
+            {/* Native Banner Ad */}
+            <div className="flex justify-center my-8">
+                <NativeBanner />
+            </div>
 
             {/* Conclusion */}
             <section className="mb-12">

@@ -1,4 +1,5 @@
 import { Swords, Trophy, TrendingUp, AlertTriangle, Star, Zap, Shield, ArrowUpRight, Coins } from 'lucide-react';
+import AdBanner, { NativeBanner } from '../AdBanner';
 
 export default function ArticleClashRoyale() {
     return (
@@ -138,6 +139,11 @@ export default function ArticleClashRoyale() {
                 </div>
             </section>
 
+            {/* Ad: Mobile Banner */}
+            <div className="flex justify-center my-8">
+                <AdBanner size="320x50" />
+            </div>
+
             {/* Section 3 */}
             <section className="mb-12">
                 <h2 className="font-[var(--font-display)] text-2xl font-bold text-white mb-4 flex items-center gap-3">
@@ -195,6 +201,11 @@ export default function ArticleClashRoyale() {
                     ))}
                 </div>
             </section>
+
+            {/* Ad: Medium Rectangle */}
+            <div className="flex justify-center my-8">
+                <AdBanner size="300x250" />
+            </div>
 
             {/* Section 5 - Economy */}
             <section className="mb-12">
@@ -279,6 +290,11 @@ export default function ArticleClashRoyale() {
                 </div>
             </section>
 
+            {/* Ad: Full Banner */}
+            <div className="flex justify-center my-8">
+                <AdBanner size="468x60" />
+            </div>
+
             {/* Section 7 */}
             <section className="mb-12">
                 <h2 className="font-[var(--font-display)] text-2xl font-bold text-white mb-4 flex items-center gap-3">
@@ -295,6 +311,12 @@ export default function ArticleClashRoyale() {
                     La priorización de cartas a subir de nivel debe seguir este orden: <strong className="text-neon-purple">Condición de Victoria</strong> → <strong className="text-neon-purple">Hechizos</strong> → <strong className="text-neon-purple">Tanques</strong> → <strong className="text-neon-purple">Tropas de Soporte</strong>. Este orden garantiza que tu capacidad ofensiva escale primero, permitiéndote competir contra mazos de nivel similar incluso si tus tropas de soporte están un nivel por debajo.
                 </p>
             </section>
+
+
+            {/* Native Banner Ad */}
+            <div className="flex justify-center my-8">
+                <NativeBanner />
+            </div>
 
             {/* Conclusion */}
             <section className="mb-12">

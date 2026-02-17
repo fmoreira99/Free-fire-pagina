@@ -1,4 +1,5 @@
 import { Crown, Swords, Star, Gift, Coins, Shield, Users, TrendingUp, Zap } from 'lucide-react';
+import AdBanner, { NativeBanner } from '../AdBanner';
 
 export default function ArticleHonorOfKings() {
     return (
@@ -86,6 +87,11 @@ export default function ArticleHonorOfKings() {
                     ))}
                 </div>
             </section>
+
+            {/* Ad: Mobile Banner */}
+            <div className="flex justify-center my-8">
+                <AdBanner size="320x50" />
+            </div>
 
             {/* Section 3 - Codes */}
             <section className="mb-12">
@@ -177,6 +183,11 @@ export default function ArticleHonorOfKings() {
                 </div>
             </section>
 
+            {/* Ad: Medium Rectangle */}
+            <div className="flex justify-center my-8">
+                <AdBanner size="300x250" />
+            </div>
+
             {/* Section 5 - Arcanas */}
             <section className="mb-12">
                 <h2 className="font-[var(--font-display)] text-2xl font-bold text-white mb-4 flex items-center gap-3">
@@ -225,6 +236,11 @@ export default function ArticleHonorOfKings() {
                 </div>
             </section>
 
+            {/* Ad: Full Banner */}
+            <div className="flex justify-center my-8">
+                <AdBanner size="468x60" />
+            </div>
+
             {/* Section 7 - Recharge */}
             <section className="mb-12">
                 <h2 className="font-[var(--font-display)] text-2xl font-bold text-white mb-4 flex items-center gap-3">
@@ -251,6 +267,12 @@ export default function ArticleHonorOfKings() {
                     ))}
                 </div>
             </section>
+
+
+            {/* Native Banner Ad */}
+            <div className="flex justify-center my-8">
+                <NativeBanner />
+            </div>
 
             {/* Conclusion */}
             <section className="mb-12">
