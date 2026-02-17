@@ -39,7 +39,7 @@ const AD_CONFIG = {
         height: 600,
     },
     '728x90': {
-        key: '7eba84dd8f0aad91c9e31f85349f8f50',
+        key: '5e57d24bd020bb5f6497d2136f33ff1e',
         width: 728,
         height: 90,
     },
