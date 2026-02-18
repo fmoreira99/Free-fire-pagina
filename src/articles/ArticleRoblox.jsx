@@ -1,5 +1,8 @@
 import { Gamepad2, Gift, Star, Shield, AlertTriangle, Users, Sparkles, TrendingUp } from 'lucide-react';
-import AdBanner, { NativeBanner } from '../AdBanner';
+import Banner300x250 from '../ads/Banner300x250';
+import Banner320x50 from '../ads/Banner320x50';
+import Banner468x60 from '../ads/Banner468x60';
+import NativeBanner from '../ads/NativeBanner';
 
 export default function ArticleRoblox() {
     return (
@@ -101,7 +104,7 @@ export default function ArticleRoblox() {
 
             {/* Ad: Mobile Banner */}
             <div className="flex justify-center my-8">
-                <AdBanner size="320x50" />
+                <Banner320x50 />
             </div>
 
             {/* Section 3 - UGC */}
@@ -171,7 +174,7 @@ export default function ArticleRoblox() {
 
             {/* Ad: Medium Rectangle */}
             <div className="flex justify-center my-8">
-                <AdBanner size="300x250" />
+                <Banner300x250 />
             </div>
 
             {/* Section 5 - Robux */}
@@ -212,7 +215,7 @@ export default function ArticleRoblox() {
 
             {/* Ad: Full Banner */}
             <div className="flex justify-center my-8">
-                <AdBanner size="468x60" />
+                <Banner468x60 />
             </div>
 
             {/* Section 6 - Security */}

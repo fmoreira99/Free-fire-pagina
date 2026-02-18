@@ -1,5 +1,8 @@
 import { Swords, Trophy, TrendingUp, AlertTriangle, Star, Zap, Shield, ArrowUpRight, Coins } from 'lucide-react';
-import AdBanner, { NativeBanner } from '../AdBanner';
+import Banner300x250 from '../ads/Banner300x250';
+import Banner320x50 from '../ads/Banner320x50';
+import Banner468x60 from '../ads/Banner468x60';
+import NativeBanner from '../ads/NativeBanner';
 
 export default function ArticleClashRoyale() {
     return (
@@ -141,7 +144,7 @@ export default function ArticleClashRoyale() {
 
             {/* Ad: Mobile Banner */}
             <div className="flex justify-center my-8">
-                <AdBanner size="320x50" />
+                <Banner320x50 />
             </div>
 
             {/* Section 3 */}
@@ -204,7 +207,7 @@ export default function ArticleClashRoyale() {
 
             {/* Ad: Medium Rectangle */}
             <div className="flex justify-center my-8">
-                <AdBanner size="300x250" />
+                <Banner300x250 />
             </div>
 
             {/* Section 5 - Economy */}
@@ -292,7 +295,7 @@ export default function ArticleClashRoyale() {
 
             {/* Ad: Full Banner */}
             <div className="flex justify-center my-8">
-                <AdBanner size="468x60" />
+                <Banner468x60 />
             </div>
 
             {/* Section 7 */}

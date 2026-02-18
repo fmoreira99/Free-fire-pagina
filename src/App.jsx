@@ -3,7 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Flame, Crosshair, Swords, User, ChevronLeft, ChevronRight, Trophy, Shield, Zap, Menu, X, Target, ArrowLeft, Clock } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { articles } from './data';
-import AdBanner, { NativeBanner } from './AdBanner';
+import Banner300x250 from './ads/Banner300x250';
+import Banner728x90 from './ads/Banner728x90';
+import Banner468x60 from './ads/Banner468x60';
+import Banner320x50 from './ads/Banner320x50';
+import Banner160x600 from './ads/Banner160x600';
+import Banner160x300 from './ads/Banner160x300';
+import NativeBanner from './ads/NativeBanner';
 import './index.css';
 
 /* ─── Lazy Article Components ─── */
@@ -85,6 +91,17 @@ function Logo({ onClick }) {
 
 /* ─── Ad Slot ─── */
 function AdSlot({ size = '300x250' }) {
+  let AdComponent;
+  switch (size) {
+    case '728x90': AdComponent = Banner728x90; break;
+    case '468x60': AdComponent = Banner468x60; break;
+    case '300x250': AdComponent = Banner300x250; break;
+    case '320x50': AdComponent = Banner320x50; break;
+    case '160x600': AdComponent = Banner160x600; break;
+    case '160x300': AdComponent = Banner160x300; break;
+    default: AdComponent = Banner300x250;
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -92,8 +109,26 @@ function AdSlot({ size = '300x250' }) {
       viewport={{ once: true }}
       className="my-10 flex items-center justify-center"
     >
-      <AdBanner size={size} />
+      <AdComponent />
     </motion.div>
+  );
+}
+
+/* ─── Sticky Side Ads ─── */
+function StickySideAds({ refreshKey }) {
+  return (
+    <div key={refreshKey}>
+      {/* Left Skyscraper */}
+      <div className="hidden 2xl:flex fixed left-4 top-1/2 -translate-y-1/2 z-40 flex-col gap-4">
+        <Banner160x600 />
+      </div>
+
+      {/* Right Skyscraper */}
+      <div className="hidden 2xl:flex fixed right-4 top-1/2 -translate-y-1/2 z-40 flex-col gap-4">
+        <Banner160x600 />
+        <Banner160x300 />
+      </div>
+    </div>
   );
 }
 
@@ -327,6 +362,7 @@ function HeroSection({ onExplore }) {
       origin: { x: 0.5, y: 0.6 },
       colors: ['#ff4500', '#ffd700', '#ff6b35', '#f97316', '#ea580c'],
       disableForReducedMotion: true,
+      zIndex: 2000,
     });
   };
 
@@ -456,7 +492,7 @@ function ArticleDetail({ articleId, onBack }) {
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState('articles');
   const [mobileMenu, setMobileMenu] = useState(false);
   const [selectedArticleId, setSelectedArticleId] = useState(null);
 
@@ -497,6 +533,7 @@ function App() {
   return (
     <div className="min-h-screen relative">
       <ParticleField />
+      <StickySideAds refreshKey={activeTab + (selectedArticleId || '')} />
 
       {/* ═══ HEADER ═══ */}
       <header className="sticky top-0 z-50 bg-dark-900/80 backdrop-blur-xl border-b border-fire-600/10">

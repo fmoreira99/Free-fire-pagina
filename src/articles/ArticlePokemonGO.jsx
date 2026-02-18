@@ -1,5 +1,8 @@
 import { Bug, Star, Zap, Shield, Trophy, TrendingUp, Users, Sparkles, Target } from 'lucide-react';
-import AdBanner, { NativeBanner } from '../AdBanner';
+import Banner300x250 from '../ads/Banner300x250';
+import Banner320x50 from '../ads/Banner320x50';
+import Banner468x60 from '../ads/Banner468x60';
+import NativeBanner from '../ads/NativeBanner';
 
 export default function ArticlePokemonGO() {
     return (
@@ -117,7 +120,7 @@ export default function ArticlePokemonGO() {
 
             {/* Ad: Mobile Banner */}
             <div className="flex justify-center my-8">
-                <AdBanner size="320x50" />
+                <Banner320x50 />
             </div>
 
             {/* Section 3 - IVs */}
@@ -200,7 +203,7 @@ export default function ArticlePokemonGO() {
 
             {/* Ad: Medium Rectangle */}
             <div className="flex justify-center my-8">
-                <AdBanner size="300x250" />
+                <Banner300x250 />
             </div>
 
             {/* Section 5 - Referrals */}
@@ -268,7 +271,7 @@ export default function ArticlePokemonGO() {
 
             {/* Ad: Full Banner */}
             <div className="flex justify-center my-8">
-                <AdBanner size="468x60" />
+                <Banner468x60 />
             </div>
 
             {/* Section 7 - Events */}
