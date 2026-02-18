@@ -119,12 +119,12 @@ function StickySideAds({ refreshKey }) {
   return (
     <div key={refreshKey}>
       {/* Left Skyscraper */}
-      <div className="hidden 2xl:flex fixed left-4 top-1/2 -translate-y-1/2 z-40 flex-col gap-4">
+      <div className="hidden xl:flex fixed left-4 top-1/2 -translate-y-1/2 z-40 flex-col gap-4">
         <Banner160x600 />
       </div>
 
       {/* Right Skyscraper */}
-      <div className="hidden 2xl:flex fixed right-4 top-1/2 -translate-y-1/2 z-40 flex-col gap-4">
+      <div className="hidden xl:flex fixed right-4 top-1/2 -translate-y-1/2 z-40 flex-col gap-4">
         <Banner160x600 />
         <Banner160x300 />
       </div>
