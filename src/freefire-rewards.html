@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FREE FIRE — Centro de Recompensas</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ff-orange: #FF6B00;
+    --ff-yellow: #FFD700;
+    --ff-red: #FF1A1A;
+    --ff-dark: #0A0A0F;
+    --ff-dark2: #12121A;
+    --ff-dark3: #1A1A2E;
+    --ff-blue: #00D4FF;
+    --ff-purple: #8B00FF;
+    --ff-green: #00FF88;
+    --glow-orange: 0 0 20px rgba(255,107,0,0.6), 0 0 40px rgba(255,107,0,0.3);
+    --glow-blue: 0 0 20px rgba(0,212,255,0.6);
+    --glow-yellow: 0 0 20px rgba(255,215,0,0.8);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ff-dark);
+    color: #fff;
+    font-family: 'Exo 2', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 20%, rgba(255,107,0,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(139,0,255,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 50% 50%, rgba(0,212,255,0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Grid overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,107,0,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,107,0,0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* HEADER */
+  header {
+    position: relative;
+    z-index: 10;
+    padding: 0 40px;
+    background: linear-gradient(180deg, rgba(10,10,15,0.98) 0%, rgba(10,10,15,0.85) 100%);
+    border-bottom: 1px solid rgba(255,107,0,0.3);
+    backdrop-filter: blur(20px);
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--ff-orange), var(--ff-red));
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: var(--glow-orange);
+    animation: pulse-logo 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-logo {
+    0%, 100% { box-shadow: var(--glow-orange); }
+    50% { box-shadow: 0 0 40px rgba(255,107,0,0.9), 0 0 80px rgba(255,107,0,0.4); }
+  }
+
+  .logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, var(--ff-orange), var(--ff-yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+  }
+
+  .logo-sub {
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    font-family: 'Rajdhani', sans-serif;
+    display: block;
+    margin-top: -4px;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .player-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,107,0,0.08);
+    border: 1px solid rgba(255,107,0,0.25);
+    padding: 8px 16px;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+  }
+
+  .player-avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #FF6B00, #FF1A1A);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .player-info span {
+    display: block;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ff-orange);
+  }
+
+  .player-info small {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+  }
+
+  .diamonds {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.25);
+    padding: 8px 14px;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    color: var(--ff-blue);
+  }
+
+  .diamonds .icon { font-size: 16px; }
+
+  /* NAV */
+  nav {
+    display: flex;
+    gap: 0;
+    padding: 0;
+  }
+
+  .nav-item {
+    padding: 14px 24px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    border: none;
+    background: none;
+  }
+
+  .nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ff-orange), var(--ff-yellow));
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .nav-item:hover, .nav-item.active {
+    color: var(--ff-orange);
+  }
+
+  .nav-item.active::after,
+  .nav-item:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* HERO BANNER */
+  .hero {
+    position: relative;
+    z-index: 5;
+    padding: 60px 40px 40px;
+    overflow: hidden;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(90deg, rgba(255,107,0,0.2), rgba(255,215,0,0.1));
+    border: 1px solid rgba(255,107,0,0.4);
+    padding: 6px 16px;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--ff-yellow);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    animation: badge-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes badge-glow {
+    0%, 100% { box-shadow: none; }
+    50% { box-shadow: 0 0 15px rgba(255,215,0,0.3); }
+  }
+
+  .hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 .line1 {
+    display: block;
+    background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero h1 .line2 {
+    display: block;
+    background: linear-gradient(90deg, var(--ff-orange), var(--ff-yellow), var(--ff-orange));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .hero p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.5);
+    max-width: 500px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  /* COUNTDOWN */
+  .countdown {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .countdown-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+  }
+
+  .countdown-units {
+    display: flex;
+    gap: 8px;
+  }
+
+  .time-unit {
+    text-align: center;
+    background: rgba(255,107,0,0.08);
+    border: 1px solid rgba(255,107,0,0.2);
+    padding: 8px 14px;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+
+  .time-unit .num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ff-orange);
+    line-height: 1;
+    display: block;
+  }
+
+  .time-unit .lbl {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+  }
+
+  .time-sep {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    color: var(--ff-orange);
+    opacity: 0.5;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* SECTION TITLE */
+  .section-header {
+    position: relative;
+    z-index: 5;
+    padding: 0 40px 30px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--ff-yellow);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255,215,0,0.4), transparent);
+  }
+
+  .section-badge {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 4px 10px;
+  }
+
+  /* REWARDS GRID */
+  .rewards-grid {
+    position: relative;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 0 40px 60px;
+  }
+
+  .reward-card {
+    position: relative;
+    background: var(--ff-dark2);
+    border: 1px solid rgba(255,255,255,0.06);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  }
+
+  .reward-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: 1;
+  }
+
+  .reward-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: rgba(255,107,0,0.4);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), var(--glow-orange);
+  }
+
+  .reward-card:hover::before {
+    opacity: 1;
+    background: linear-gradient(135deg, rgba(255,107,0,0.05) 0%, transparent 60%);
+  }
+
+  /* Card rarity variants */
+  .reward-card.legendary {
+    border-color: rgba(255,215,0,0.2);
+    background: linear-gradient(135deg, #1A1500 0%, #0A0A0F 60%);
+  }
+  .reward-card.legendary:hover {
+    border-color: rgba(255,215,0,0.6);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), var(--glow-yellow);
+  }
+
+  .reward-card.epic {
+    border-color: rgba(139,0,255,0.2);
+    background: linear-gradient(135deg, #0D001A 0%, #0A0A0F 60%);
+  }
+  .reward-card.epic:hover {
+    border-color: rgba(139,0,255,0.6);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 20px rgba(139,0,255,0.5);
+  }
+
+  .reward-card.rare {
+    border-color: rgba(0,212,255,0.2);
+    background: linear-gradient(135deg, #001A1F 0%, #0A0A0F 60%);
+  }
+  .reward-card.rare:hover {
+    border-color: rgba(0,212,255,0.5);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), var(--glow-blue);
+  }
+
+  .card-ribbon {
+    position: absolute;
+    top: 14px;
+    right: -8px;
+    z-index: 10;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px 4px 10px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 8px 50%);
+  }
+  .card-ribbon.legendary { background: linear-gradient(90deg, #B8860B, var(--ff-yellow)); color: #000; }
+  .card-ribbon.epic { background: linear-gradient(90deg, #5B0090, var(--ff-purple)); color: #fff; }
+  .card-ribbon.rare { background: linear-gradient(90deg, #006080, var(--ff-blue)); color: #000; }
+  .card-ribbon.gratis { background: linear-gradient(90deg, #005530, var(--ff-green)); color: #000; }
+
+  .card-preview {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-preview .item-icon {
+    font-size: 80px;
+    filter: drop-shadow(0 0 20px currentColor);
+    animation: float 3s ease-in-out infinite;
+    z-index: 2;
+    position: relative;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+  }
+
+  .card-preview::before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 30px;
+    background: radial-gradient(ellipse, rgba(255,107,0,0.4), transparent 70%);
+    border-radius: 50%;
+    filter: blur(8px);
+  }
+
+  .card-glow-ring {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    animation: spin-ring 4s linear infinite;
+  }
+
+  .legendary .card-glow-ring { border-color: rgba(255,215,0,0.3); box-shadow: 0 0 20px rgba(255,215,0,0.2); }
+  .epic .card-glow-ring { border-color: rgba(139,0,255,0.3); box-shadow: 0 0 20px rgba(139,0,255,0.2); }
+  .rare .card-glow-ring { border-color: rgba(0,212,255,0.3); box-shadow: 0 0 20px rgba(0,212,255,0.2); }
+
+  @keyframes spin-ring {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .card-bg-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%);
+    background-size: 20px 20px;
+  }
+
+  .card-body {
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .card-category {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 6px;
+  }
+
+  .card-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .legendary .card-name { color: var(--ff-yellow); }
+  .epic .card-name { color: #CC66FF; }
+  .rare .card-name { color: var(--ff-blue); }
+  .reward-card:not(.legendary):not(.epic):not(.rare) .card-name { color: var(--ff-orange); }
+
+  .card-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-cost {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .cost-free { color: var(--ff-green); }
+  .cost-diamond { color: var(--ff-blue); }
+  .cost-gold { color: var(--ff-yellow); }
+
+  .claim-btn {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: all 0.3s;
+  }
+
+  .claim-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 40%;
+    height: 200%;
+    background: rgba(255,255,255,0.3);
+    transform: skewX(-20deg);
+    transition: left 0.4s;
+  }
+
+  .claim-btn:hover::before { left: 120%; }
+
+  .claim-btn.primary {
+    background: linear-gradient(90deg, var(--ff-orange), #FF3D00);
+    color: #fff;
+  }
+  .claim-btn.primary:hover {
+    box-shadow: 0 4px 20px rgba(255,107,0,0.6);
+  }
+
+  .claim-btn.legendary-btn {
+    background: linear-gradient(90deg, #B8860B, var(--ff-yellow));
+    color: #000;
+  }
+  .claim-btn.legendary-btn:hover {
+    box-shadow: 0 4px 20px rgba(255,215,0,0.5);
+  }
+
+  .claim-btn.epic-btn {
+    background: linear-gradient(90deg, #5B0090, var(--ff-purple));
+    color: #fff;
+  }
+  .claim-btn.epic-btn:hover {
+    box-shadow: 0 4px 20px rgba(139,0,255,0.5);
+  }
+
+  .claim-btn.rare-btn {
+    background: linear-gradient(90deg, #006080, var(--ff-blue));
+    color: #000;
+  }
+  .claim-btn.rare-btn:hover {
+    box-shadow: 0 4px 20px rgba(0,212,255,0.5);
+  }
+
+  /* CLAIMED STATE */
+  .reward-card.claimed {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .reward-card.claimed .claim-btn {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.3);
+    cursor: not-allowed;
+  }
+
+  /* CODE SECTION */
+  .code-section {
+    position: relative;
+    z-index: 5;
+    margin: 0 40px 60px;
+    background: var(--ff-dark2);
+    border: 1px solid rgba(255,107,0,0.2);
+    clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+    overflow: hidden;
+  }
+
+  .code-inner {
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .code-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,107,0,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .code-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, var(--ff-orange), var(--ff-yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .code-desc {
+    color: rgba(255,255,255,0.4);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .code-input-row {
+    display: flex;
+    gap: 0;
+  }
+
+  .code-input {
+    flex: 1;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,107,0,0.3);
+    border-right: none;
+    padding: 14px 20px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    outline: none;
+    clip-path: polygon(10px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 10px);
+    transition: border-color 0.3s;
+  }
+
+  .code-input::placeholder {
+    color: rgba(255,255,255,0.2);
+    font-size: 12px;
+  }
+
+  .code-input:focus {
+    border-color: var(--ff-orange);
+    background: rgba(255,107,0,0.06);
+  }
+
+  .code-btn {
+    padding: 14px 30px;
+    background: linear-gradient(90deg, var(--ff-orange), #FF3D00);
+    border: none;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 100%);
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+
+  .code-btn:hover {
+    box-shadow: var(--glow-orange);
+    background: linear-gradient(90deg, #FF8C00, var(--ff-orange));
+  }
+
+  .code-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    filter: drop-shadow(0 0 30px rgba(255,107,0,0.5));
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(10px);
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--ff-dark2);
+    border: 1px solid rgba(255,107,0,0.4);
+    padding: 48px;
+    max-width: 480px;
+    width: 90%;
+    clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+    position: relative;
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+  }
+
+  .modal-overlay.active .modal {
+    transform: scale(1);
+  }
+
+  .modal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,107,0,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .modal-icon {
+    font-size: 72px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 30px rgba(255,215,0,0.6));
+    animation: float 2s ease-in-out infinite;
+    display: block;
+  }
+
+  .modal h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, var(--ff-orange), var(--ff-yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+
+  .modal p {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  .modal-item-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #fff;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .modal-close {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg, var(--ff-orange), #FF3D00);
+    border: none;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    clip-path: polygon(10px 0%, calc(100% - 10px) 0%, 100% 10px, 100% 100%, calc(100% - 10px) 100%, 10px 100%, 0% calc(100% - 10px), 0% 10px);
+    transition: all 0.3s;
+  }
+
+  .modal-close:hover {
+    box-shadow: var(--glow-orange);
+  }
+
+  /* PARTICLES */
+  .particles-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--ff-orange);
+    border-radius: 50%;
+    animation: particle-float linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes particle-float {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+  }
+
+  /* CONFETTI for claimed */
+  .confetti-piece {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    pointer-events: none;
+    z-index: 2000;
+    animation: confetti-fall 1.5s ease-out forwards;
+  }
+
+  @keyframes confetti-fall {
+    0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+    100% { transform: translateY(300px) rotate(720deg) scale(0); opacity: 0; }
+  }
+
+  /* PROGRESS BAR */
+  .progress-section {
+    position: relative;
+    z-index: 5;
+    margin: 0 40px 40px;
+    background: var(--ff-dark2);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 24px 32px;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+  }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .progress-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .progress-count {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    color: var(--ff-orange);
+  }
+
+  .progress-bar-bg {
+    height: 8px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 0;
+    overflow: hidden;
+    clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--ff-orange), var(--ff-yellow));
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+
+  .progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4));
+    animation: progress-shine 1s ease-in-out infinite;
+  }
+
+  @keyframes progress-shine {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--ff-dark2);
+    border: 1px solid rgba(0,255,136,0.4);
+    padding: 16px 24px;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    z-index: 999;
+    transform: translateX(150%);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    box-shadow: 0 0 20px rgba(0,255,136,0.2);
+  }
+
+  .toast.show { transform: translateX(0); }
+  .toast .toast-icon { font-size: 24px; }
+  .toast .toast-text { color: var(--ff-green); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    header { padding: 0 20px; }
+    .hero { padding: 40px 20px 30px; }
+    .rewards-grid { padding: 0 20px 40px; grid-template-columns: 1fr; }
+    .section-header { padding: 0 20px 20px; }
+    .code-section { margin: 0 20px 40px; }
+    .code-inner { grid-template-columns: 1fr; gap: 20px; }
+    .code-visual { display: none; }
+    .progress-section { margin: 0 20px 30px; }
+    .header-top { flex-wrap: wrap; gap: 12px; }
+    .nav-item { padding: 12px 16px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particles-container" id="particles"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-top">
+    <div class="logo">
+      <div class="logo-icon">🔥</div>
+      <div>
+        <div class="logo-text">Free Fire</div>
+        <span class="logo-sub">Centro de Recompensas</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="diamonds">
+        <span class="icon">💎</span>
+        <span id="diamond-count">3,450</span>
+      </div>
+      <div class="player-card">
+        <div class="player-avatar">🎮</div>
+        <div class="player-info">
+          <span>ShadowKiller99</span>
+          <small>NIVEL 72 • PLATINO</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav>
+    <button class="nav-item active">🎁 Regalos</button>
+    <button class="nav-item">⚔️ Armas</button>
+    <button class="nav-item">👾 Skins</button>
+    <button class="nav-item">📦 Cofres</button>
+    <button class="nav-item">💰 Adelantos</button>
+    <button class="nav-item">🏆 Reclamos</button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">⚡ EVENTO ESPECIAL — TEMPORADA 12</div>
+  <h1>
+    <span class="line1">RECLAMA TUS</span>
+    <span class="line2">RECOMPENSAS</span>
+  </h1>
+  <p>Obtén skins veteranas exclusivas, armas especiales, cofres legendarios y adelantos de temporada. ¡Las recompensas son por tiempo limitado!</p>
+
+  <div class="countdown">
+    <span class="countdown-label">🕐 Expira en</span>
+    <div class="countdown-units">
+      <div class="time-unit">
+        <span class="num" id="hours">23</span>
+        <span class="lbl">Horas</span>
+      </div>
+      <span class="time-sep">:</span>
+      <div class="time-unit">
+        <span class="num" id="minutes">47</span>
+        <span class="lbl">Min</span>
+      </div>
+      <span class="time-sep">:</span>
+      <div class="time-unit">
+        <span class="num" id="seconds">12</span>
+        <span class="lbl">Seg</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<div class="progress-section">
+  <div class="progress-header">
+    <span class="progress-title">⚡ Progreso de Recompensas</span>
+    <span class="progress-count" id="progress-text">2 / 8 reclamadas</span>
+  </div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progress-bar" style="width: 25%"></div>
+  </div>
+</div>
+
+<!-- REWARDS -->
+<div class="section-header">
+  <span class="section-title">🏆 Recompensas Disponibles</span>
+  <div class="section-line"></div>
+  <span class="section-badge">8 Items</span>
+</div>
+
+<div class="rewards-grid">
+
+  <!-- Skin Veterana Legendaria -->
+  <div class="reward-card legendary" data-name="Conjunto Dragón de Fuego" data-icon="🐉" data-desc="Skin veterana exclusiva desbloqueada">
+    <div class="card-ribbon legendary">LEGENDARIO</div>
+    <div class="card-preview">
+      <div class="card-bg-pattern"></div>
+      <div class="card-glow-ring"></div>
+      <div class="item-icon" style="color: #FFD700">🐉</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">👑 Skin Veterana</div>
+      <div class="card-name">Dragón de Fuego</div>
+      <div class="card-desc">Skin de temporada exclusiva para jugadores veteranos con más de 200 partidas.</div>
+      <div class="card-footer">
+        <div class="card-cost cost-free">🎁 GRATIS</div>
+        <button class="claim-btn legendary-btn" onclick="claimReward(this)">RECLAMAR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arma Especial -->
+  <div class="reward-card epic" data-name="M1014 — Plasma Storm" data-icon="🔫" data-desc="Skin de arma épica reclamada">
+    <div class="card-ribbon epic">ÉPICO</div>
+    <div class="card-preview">
+      <div class="card-bg-pattern"></div>
+      <div class="card-glow-ring"></div>
+      <div class="item-icon" style="color: #CC66FF">🔫</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">⚔️ Arma Especial</div>
+      <div class="card-name">M1014 Plasma Storm</div>
+      <div class="card-desc">Escopeta épica con efectos de plasma electromagnético. Daño aumentado +15%.</div>
+      <div class="card-footer">
+        <div class="card-cost cost-diamond">💎 800</div>
+        <button class="claim-btn epic-btn" onclick="claimReward(this)">RECLAMAR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cofre Legendario -->
+  <div class="reward-card legendary" data-name="Cofre Élite Temporada" data-icon="📦" data-desc="Cofre legendario abierto con éxito">
+    <div class="card-ribbon legendary">LEGENDARIO</div>
+    <div class="card-preview">
+      <div class="card-bg-pattern"></div>
+      <div class="card-glow-ring"></div>
+      <div class="item-icon" style="color: #FFD700">📦</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">📦 Cofre Especial</div>
+      <div class="card-name">Cofre Élite T12</div>
+      <div class="card-desc">Contiene items legendarios garantizados: skin de personaje, arma o mascota.</div>
+      <div class="card-footer">
+        <div class="card-cost cost-gold">🪙 2,000</div>
+        <button class="claim-btn legendary-btn" onclick="claimReward(this)">ABRIR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Regalo Diario GRATIS -->
+  <div class="reward-card" data-name="Regalo Diario — Diamantes" data-icon="💎" data-desc="Diamantes diarios reclamados">
+    <div class="card-ribbon gratis">GRATIS</div>
+    <div class="card-preview">
+      <div class="card-bg-pattern"></div>
+      <div class="item-icon" style="color: var(--ff-blue)">💎</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">🎁 Regalo Diario</div>
+      <div class="card-name">50 Diamantes</div>
+      <div class="card-desc">Recompensa diaria gratuita. ¡Regresa cada 24 horas para reclamar más!</div>
+      <div class="card-footer">
+        <div class="card-cost cost-free">🎁 GRATIS</div>
+        <button class="claim-btn primary" onclick="claimReward(this)">RECLAMAR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skin Veterana Épica -->
+  <div class="reward-card epic" data-name="Traje Comando Elite — Rojo" data-icon="🥷" data-desc="Skin de personaje épico reclamado">
+    <div class="card-ribbon epic">ÉPICO</div>
+    <div class="card-preview">
+      <div class="card-bg-pattern"></div>
+      <div class="card-glow-ring"></div>
+      <div class="item-icon" style="color: #CC66FF">🥷</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">👾 Skin Veterana</div>
+      <div class="card-name">Comando Élite — Rojo</div>
+      <div class="card-desc">Traje épico con armadura táctica de edición limitada para la temporada 12.</div>
+      <div class="card-footer">
+        <div class="card-cost cost-diamond">💎 1,200</div>
+        <button class="claim-btn epic-btn" onclick="claimReward(this)">RECLAMAR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Adelanto de Pase -->
+  <div class="reward-card rare" data-name="Adelanto Pase Elite — 5 Niveles" data-icon="🚀" data-desc="Adelanto de pase activado">
+    <div class="card-ribbon rare">RARO</div>
+    <div class="card-preview">
+      <div class="card-bg-pattern"></div>
+      <div class="card-glow-ring"></div>
+      <div class="item-icon" style="color: var(--ff-blue)">🚀</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">💰 Adelanto</div>
+      <div class="card-name">+5 Niveles Pase</div>
+      <div class="card-desc">Sube 5 niveles instantáneamente en tu Pase Elite y desbloquea recompensas.</div>
+      <div class="card-footer">
+        <div class="card-cost cost-diamond">💎 500</div>
+        <button class="claim-btn rare-btn" onclick="claimReward(this)">ACTIVAR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mascota -->
+  <div class="reward-card" data-name="Mascota — Lobo Ártico" data-icon="🐺" data-desc="Mascota desbloqueda con éxito">
+    <div class="card-ribbon gratis">GRATIS</div>
+    <div class="card-preview">
+      <div class="card-bg-pattern"></div>
+      <div class="item-icon" style="color: #ccc">🐺</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">🐾 Mascota</div>
+      <div class="card-name">Lobo Ártico</div>
+      <div class="card-desc">Mascota exclusiva de temporada. Aumenta velocidad de movimiento +5% en zona fría.</div>
+      <div class="card-footer">
+        <div class="card-cost cost-free">🎁 GRATIS</div>
+        <button class="claim-btn primary" onclick="claimReward(this)">RECLAMAR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arma Legendaria -->
+  <div class="reward-card legendary" data-name="SCAR — Dragón Dorado" data-icon="🗡️" data-desc="Skin legendaria SCAR reclamada">
+    <div class="card-ribbon legendary">LEGENDARIO</div>
+    <div class="card-preview">
+      <div class="card-bg-pattern"></div>
+      <div class="card-glow-ring"></div>
+      <div class="item-icon" style="color: #FFD700">🗡️</div>
+    </div>
+    <div class="card-body">
+      <div class="card-category">⚔️ Arma Especial</div>
+      <div class="card-name">SCAR — Dragón Dorado</div>
+      <div class="card-desc">Skin de fusil de asalto legendaria con animaciones de fuego dorado exclusivas.</div>
+      <div class="card-footer">
+        <div class="card-cost cost-gold">🪙 5,000</div>
+        <button class="claim-btn legendary-btn" onclick="claimReward(this)">RECLAMAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CODE REDEMPTION -->
+<div class="code-section">
+  <div class="code-inner">
+    <div>
+      <div class="code-title">🎟️ Canjear Código</div>
+      <div class="code-desc">Ingresa tu código de regalo para obtener items exclusivos, diamantes y skins especiales.</div>
+      <div class="code-input-row">
+        <input type="text" class="code-input" id="codeInput" placeholder="INGRESA TU CÓDIGO AQUÍ" maxlength="20">
+        <button class="code-btn" onclick="redeemCode()">CANJEAR</button>
+      </div>
+    </div>
+    <div class="code-visual">🎟️</div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <span class="modal-icon" id="modal-icon">🎉</span>
+    <h2>¡RECLAMADO!</h2>
+    <p>Has reclamado exitosamente</p>
+    <span class="modal-item-name" id="modal-item-name">Item</span>
+    <p id="modal-desc">Tu recompensa ha sido enviada a tu cuenta.</p>
+    <br>
+    <button class="modal-close" onclick="closeModal()">¡ENTENDIDO!</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✅</span>
+  <span class="toast-text" id="toast-text">Código canjeado exitosamente</span>
+</div>
+
+<script>
+  // Particles
+  function createParticles() {
+    const container = document.getElementById('particles');
+    const colors = ['#FF6B00', '#FFD700', '#00D4FF', '#8B00FF', '#FF1A1A'];
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      p.style.width = (Math.random() * 3 + 1) + 'px';
+      p.style.height = p.style.width;
+      p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+      p.style.animationDelay = (Math.random() * 15) + 's';
+      container.appendChild(p);
+    }
+  }
+  createParticles();
+
+  // Countdown
+  let totalSeconds = 23 * 3600 + 47 * 60 + 12;
+  function updateCountdown() {
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
+    document.getElementById('hours').textContent = String(h).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+    if (totalSeconds > 0) totalSeconds--;
+  }
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  // Progress tracking
+  let claimed = 0;
+  const total = 8;
+
+  function updateProgress() {
+    const pct = (claimed / total) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = claimed + ' / ' + total + ' reclamadas';
+  }
+
+  // Confetti
+  function spawnConfetti(x, y) {
+    const colors = ['#FF6B00', '#FFD700', '#00D4FF', '#FF1A1A', '#00FF88', '#8B00FF'];
+    for (let i = 0; i < 20; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.left = x + (Math.random() - 0.5) * 200 + 'px';
+      c.style.top = y + 'px';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+      c.style.animationDelay = (Math.random() * 0.3) + 's';
+      c.style.animationDuration = (Math.random() * 0.5 + 1) + 's';
+      const angle = Math.random() * 360;
+      const dist = Math.random() * 150 + 50;
+      c.style.setProperty('--tx', Math.cos(angle * Math.PI / 180) * dist + 'px');
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 1800);
+    }
+  }
+
+  // Claim
+  function claimReward(btn) {
+    const card = btn.closest('.reward-card');
+    const name = card.dataset.name;
+    const icon = card.dataset.icon;
+    const desc = card.dataset.desc;
+
+    // Confetti
+    const rect = btn.getBoundingClientRect();
+    spawnConfetti(rect.left + rect.width / 2, rect.top);
+
+    // Mark claimed
+    card.classList.add('claimed');
+    btn.textContent = '✓ RECLAMADO';
+    claimed++;
+    updateProgress();
+
+    // Show modal
+    document.getElementById('modal-icon').textContent = icon;
+    document.getElementById('modal-item-name').textContent = name;
+    document.getElementById('modal-desc').textContent = desc + '! Revisa tu mochila en el juego.';
+    document.getElementById('modal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+  }
+
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // Code redemption
+  const validCodes = {
+    'FFGARENA2024': { icon: '💎', name: '500 Diamantes Gratis', desc: '¡500 diamantes añadidos a tu cuenta!' },
+    'SKIN2024FF': { icon: '🥷', name: 'Skin Exclusiva', desc: '¡Skin de edición limitada desbloqueada!' },
+    'TEMPORADA12': { icon: '🎁', name: 'Pack Temporada', desc: '¡Pack de inicio de temporada reclamado!' },
+    'FREEFIRE2024': { icon: '🔥', name: '1000 Monedas de Oro', desc: '¡Monedas depositadas en tu cuenta!' },
+  };
+
+  function redeemCode() {
+    const input = document.getElementById('codeInput');
+    const code = input.value.trim().toUpperCase();
+
+    if (!code) {
+      showToast('⚠️', 'Ingresa un código válido', '#FF6B00');
+      input.style.borderColor = 'rgba(255,107,0,0.8)';
+      setTimeout(() => input.style.borderColor = '', 2000);
+      return;
+    }
+
+    if (validCodes[code]) {
+      const item = validCodes[code];
+      document.getElementById('modal-icon').textContent = item.icon;
+      document.getElementById('modal-item-name').textContent = item.name;
+      document.getElementById('modal-desc').textContent = item.desc;
+      document.getElementById('modal').classList.add('active');
+      input.value = '';
+      spawnConfetti(window.innerWidth / 2, window.innerHeight / 2);
+    } else {
+      showToast('❌', 'Código inválido o expirado', '#FF1A1A');
+      input.style.borderColor = 'rgba(255,26,26,0.8)';
+      setTimeout(() => input.style.borderColor = '', 2000);
+    }
+  }
+
+  document.getElementById('codeInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') redeemCode();
+  });
+
+  function showToast(icon, text, color) {
+    const toast = document.getElementById('toast');
+    const iconEl = toast.querySelector('.toast-icon');
+    const textEl = document.getElementById('toast-text');
+    iconEl.textContent = icon;
+    textEl.textContent = text;
+    textEl.style.color = color;
+    toast.style.borderColor = color + '66';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  // Nav items
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Codes hint
+  console.log('%c🔥 CÓDIGOS DE PRUEBA: FFGARENA2024 | SKIN2024FF | TEMPORADA12 | FREEFIRE2024', 
+    'color: #FF6B00; font-size: 14px; font-weight: bold;');
+</script>
+</body>
+</html>

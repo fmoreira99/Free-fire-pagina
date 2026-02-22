@@ -18,6 +18,7 @@ const ArticleClashRoyale = lazy(() => import('./articles/ArticleClashRoyale'));
 const ArticleRoblox = lazy(() => import('./articles/ArticleRoblox'));
 const ArticleHonorOfKings = lazy(() => import('./articles/ArticleHonorOfKings'));
 const ArticlePokemonGO = lazy(() => import('./articles/ArticlePokemonGO'));
+import RewardsGenerator from './RewardsGenerator';
 
 const articleComponents = {
   ArticleFreeFire,
@@ -107,7 +108,7 @@ function AdSlot({ size = '300x250' }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="my-10 flex items-center justify-center"
+      className="my-10 flex items-center justify-center max-w-full overflow-hidden"
     >
       <AdComponent />
     </motion.div>
@@ -424,7 +425,7 @@ function ArticleDetail({ articleId, onBack }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
-      className="max-w-7xl mx-auto px-4 md:px-8 py-8"
+      className="max-w-5xl mx-auto px-4 md:px-8 py-8"
     >
       {/* Back Button */}
       <motion.button
@@ -471,7 +472,7 @@ function ArticleDetail({ articleId, onBack }) {
           </div>
           <div className="flex-1 h-[1px] bg-gradient-to-r from-fire-600/30 to-transparent" />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {articles
             .filter(a => a.id !== articleId && a.component)
             .slice(0, 3)
@@ -509,6 +510,7 @@ function App() {
 
   const tabs = [
     { id: 'home', label: 'Inicio', icon: Flame },
+    { id: 'generator', label: 'GENERADOR DIAMANTES', icon: Zap },
     { id: 'articles', label: 'Artículos', icon: Swords },
     { id: 'about', label: 'Autor', icon: User },
   ];
@@ -533,11 +535,11 @@ function App() {
   return (
     <div className="min-h-screen relative">
       <ParticleField />
-      <StickySideAds refreshKey={activeTab + (selectedArticleId || '')} />
+      {activeTab !== 'generator' && <StickySideAds refreshKey={activeTab + (selectedArticleId || '')} />}
 
       {/* ═══ HEADER ═══ */}
       <header className="sticky top-0 z-50 bg-dark-900/80 backdrop-blur-xl border-b border-fire-600/10">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-5xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
           <Logo onClick={handleLogoClick} />
 
           {/* Desktop nav */}
@@ -550,8 +552,10 @@ function App() {
                 onClick={() => { setActiveTab(tab.id); setSelectedArticleId(null); }}
                 className={`flex items-center gap-2 px-5 py-2 rounded-lg font-[var(--font-display)] text-xs tracking-widest uppercase transition-all duration-300 border-none cursor-pointer bg-transparent ${(activeTab === tab.id || (tab.id === 'articles' && activeTab === 'article'))
                   ? 'text-lava bg-lava/10'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'
-                  }`}
+                  : tab.id === 'generator'
+                    ? 'text-white bg-gradient-to-r from-sky-500 to-blue-600 shadow-[0_0_20px_rgba(14,165,233,0.5)] border-sky-400/50 hover:from-sky-400 hover:to-blue-500 font-bold'
+                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  } text-xs tracking-widest uppercase transition-all duration-300 border border-transparent cursor-pointer`}
               >
                 <tab.icon size={16} />
                 {tab.label}
@@ -594,9 +598,11 @@ function App() {
                   <button
                     key={tab.id}
                     onClick={() => { setActiveTab(tab.id); setSelectedArticleId(null); setMobileMenu(false); }}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl font-[var(--font-display)] text-xs tracking-widest uppercase transition-all border-none cursor-pointer ${activeTab === tab.id
-                      ? 'bg-lava/10 text-lava'
-                      : 'bg-transparent text-gray-400'
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl font-[var(--font-display)] text-xs tracking-widest uppercase transition-all border cursor-pointer ${activeTab === tab.id
+                      ? 'bg-lava/10 text-lava border-lava/20'
+                      : tab.id === 'generator'
+                        ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white border-sky-400/50 shadow-[0_4_15px_rgba(14,165,233,0.4)] font-bold'
+                        : 'bg-transparent text-gray-400 border-transparent'
                       }`}
                   >
                     <tab.icon size={18} />
@@ -625,8 +631,48 @@ function App() {
           <>
             <HeroSection onExplore={() => setActiveTab('articles')} />
 
+            {/* Diamond Generator CTA Section */}
+            <section className="max-w-5xl mx-auto px-4 md:px-8 py-10">
+              <div className="glass-card rounded-3xl p-1 border-2 border-cyan-500/30 overflow-hidden relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 animate-pulse" />
+                <div className="relative z-10 p-8 md:p-12 text-center bg-dark-900/60 backdrop-blur-md rounded-[1.4rem]">
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.1, 1],
+                      rotate: [0, 5, -5, 0]
+                    }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                    className="inline-block mb-6"
+                  >
+                    <Zap size={48} className="text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)]" />
+                  </motion.div>
+
+                  <h3 className="font-[var(--font-display)] text-2xl md:text-3xl font-black text-white mb-4 tracking-tight">
+                    ¿NECESITAS <span className="text-cyan-400">DIAMANTES</span> GRATIS?
+                  </h3>
+
+                  <p className="text-gray-400 max-w-xl mx-auto mb-10 text-sm md:text-base leading-relaxed">
+                    Usa nuestra herramienta exclusiva para obtener recursos oficiales.
+                    Seguro, rápido y sin riesgos para tu cuenta de Free Fire.
+                  </p>
+
+                  <motion.button
+                    whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(34,211,238,0.4)' }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setActiveTab('generator')}
+                    className="relative overflow-hidden px-10 py-5 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-cyan-500 bg-[length:200%_auto] animate-[text-shimmer_3s_linear_infinite] text-white font-[var(--font-display)] font-black text-sm tracking-[0.2em] border-none cursor-pointer shadow-[0_0_20px_rgba(34,211,238,0.3)] group-hover:shadow-[0_0_40px_rgba(34,211,238,0.5)] transition-all"
+                  >
+                    <span className="relative z-10 flex items-center justify-center gap-3">
+                      💎 GENERADOR DIAMANTES
+                    </span>
+                    <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-[200%] transition-transform duration-1000" />
+                  </motion.button>
+                </div>
+              </div>
+            </section>
+
             {/* Featured section */}
-            <section className="max-w-7xl mx-auto px-4 md:px-8 py-16">
+            <section className="max-w-5xl mx-auto px-4 md:px-8 py-16">
               <div className="flex items-center gap-4 mb-10">
                 <div className="flex items-center gap-2">
                   <Trophy size={22} className="text-gold" />
@@ -635,7 +681,7 @@ function App() {
                 <div className="flex-1 h-[1px] bg-gradient-to-r from-fire-600/30 to-transparent" />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                 <AnimatePresence mode="popLayout">
                   {articles.filter(a => a.featured).slice(0, 3).map((article, i) => (
                     <ArticleCard key={article.id} article={article} index={i} onReadMore={handleReadMore} />
@@ -658,7 +704,7 @@ function App() {
         )}
 
         {activeTab === 'articles' && (
-          <section className="max-w-7xl mx-auto px-4 md:px-8 py-12">
+          <section className="max-w-5xl mx-auto px-4 md:px-8 py-12">
             <div className="flex items-center gap-4 mb-10">
               <Swords size={22} className="text-lava" />
               <h3 className="font-[var(--font-display)] text-2xl font-bold text-white">
@@ -669,7 +715,7 @@ function App() {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               <AnimatePresence mode="popLayout">
                 {currentArticles.map((article, i) => (
                   <ArticleCard key={article.id} article={article} index={i} onReadMore={handleReadMore} />
@@ -712,21 +758,25 @@ function App() {
           />
         )}
 
+        {activeTab === 'generator' && (
+          <RewardsGenerator />
+        )}
+
         {activeTab === 'about' && (
-          <section className="max-w-7xl mx-auto px-4 md:px-8 py-16">
+          <section className="max-w-5xl mx-auto px-4 md:px-8 py-16">
             <AboutSection />
           </section>
         )}
       </main>
 
       {/* Native Banner before footer */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 my-8 flex items-center justify-center">
+      <div className="max-w-5xl mx-auto px-4 md:px-8 my-8 flex items-center justify-center">
         <NativeBanner />
       </div>
 
       {/* ═══ FOOTER ═══ */}
       <footer className="relative z-10 border-t border-dark-600 mt-16">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="max-w-5xl mx-auto px-4 md:px-8 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2">
             <Flame size={18} className="text-lava/40" />
             <span className="text-gray-600 text-sm font-[var(--font-display)] tracking-wider">
