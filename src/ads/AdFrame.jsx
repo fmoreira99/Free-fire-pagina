@@ -12,35 +12,24 @@ export default function AdFrame({ adKey, width, height }) {
         iframe.style.border = 'none';
         iframe.style.overflow = 'hidden';
         iframe.scrolling = 'no';
+        iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups');
+        iframe.setAttribute('allow', 'autoplay');
+
+        const html = [
+            '<!DOCTYPE html><html>',
+            '<head><style>body{margin:0;padding:0;overflow:hidden;}</style></head>',
+            '<body>',
+            '<script type="text/javascript">',
+            'atOptions={"key":"' + adKey + '","format":"iframe","height":' + height + ',"width":' + width + ',"params":{}};',
+            '<\/script>',
+            '<script type="text/javascript" src="//www.highperformanceformat.com/' + adKey + '/invoke.js"><\/script>',
+            '</body></html>'
+        ].join('');
+
+        iframe.srcdoc = html;
 
         containerRef.current.innerHTML = '';
         containerRef.current.appendChild(iframe);
-
-        try {
-            const doc = iframe.contentWindow.document;
-            doc.open();
-            doc.writeln(`
-                <!DOCTYPE html>
-                <html>
-                <head><style>body{margin:0;padding:0;overflow:hidden;}</style></head>
-                <body>
-                    <script type="text/javascript">
-                        atOptions = {
-                            'key' : '${adKey}',
-                            'format' : 'iframe',
-                            'height' : ${height},
-                            'width' : ${width},
-                            'params' : {}
-                        };
-                    </script>
-                    <script type="text/javascript" src="//www.highperformanceformat.com/${adKey}/invoke.js"></script>
-                </body>
-                </html>
-            `);
-            doc.close();
-        } catch (e) {
-            console.error('Error writing to iframe:', e);
-        }
 
     }, [adKey, width, height]);
 

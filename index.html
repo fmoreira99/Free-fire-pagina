@@ -2,7 +2,6 @@
 <html lang="es">
 
 <head>
-  <script src="https://3nbf4.com/act/files/tag.min.js?z=10623091" data-cfasync="false" async></script>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,12 +12,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
     content="Free Fire Battle Zone - Guías, estrategias, códigos de canje y noticias del mundo gaming. Artículos sobre Free Fire, Clash Royale, Roblox, Honor of Kings y Pokémon GO." />
+  <!-- Open Graph / Facebook / WhatsApp / Instagram -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://zonafree.zonasilau.site/" />
+  <meta property="og:title" content="Free Fire Battle Zone | Guías, Códigos y Estrategias Gaming 2026" />
+  <meta property="og:description" content="Free Fire Battle Zone - Guías, estrategias, códigos de canje y noticias del mundo gaming." />
+  <meta property="og:image" content="https://zonafree.zonasilau.site/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Free Fire Battle Zone" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Fire Battle Zone | Guías y Estrategias Gaming" />
+  <meta name="twitter:description" content="Guías, estrategias, códigos de canje y noticias del mundo gaming." />
+  <meta name="twitter:image" content="https://zonafree.zonasilau.site/og-image.jpg" />
   <title>Free Fire Battle Zone | Guías, Códigos y Estrategias Gaming 2026</title>
 </head>
 
 <body>
-  <script>(function (s) { s.dataset.zone = '10623086', s.src = 'https://nap5k.com/tag.min.js' })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-  <script>(function (s) { s.dataset.zone = '10623090', s.src = 'https://gizokraijaw.net/vignette.min.js' })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+  <!-- Banner de consentimiento para notificaciones push -->
+  <div id="push-consent-banner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:99999; background:#1a1a2e; border-top:2px solid #ff4500; padding:14px 20px; font-family:sans-serif; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+    <span style="color:#fff; font-size:13px; flex:1; min-width:200px;">
+      Activa notificaciones para recibir <strong style="color:#ff4500;">códigos y guías exclusivas</strong> de Free Fire
+    </span>
+    <div style="display:flex; gap:10px; flex-shrink:0;">
+      <button id="push-deny" style="background:transparent; border:1px solid #555; color:#999; padding:8px 16px; border-radius:6px; cursor:pointer; font-size:13px;">No gracias</button>
+      <button id="push-accept" style="background:#ff4500; border:none; color:#fff; padding:8px 18px; border-radius:6px; cursor:pointer; font-size:13px; font-weight:bold;">Activar</button>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    // Detectar in-app browsers de Instagram, Facebook, TikTok, etc.
+    var ua = navigator.userAgent || '';
+    var isInAppBrowser = /Instagram|FBAN|FBAV|FB_IAB|FacebookLite|Twitter|Line\/|TikTok|Snapchat|Pinterest/i.test(ua);
+    var isWebView = /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(ua) ||
+                    /wv\)/.test(ua);
+    var isRestricted = isInAppBrowser || isWebView;
+
+    // Cargar Monetag push (solo con consentimiento)
+    function loadMonetagPush() {
+      var s = document.createElement('script');
+      s.src = 'https://3nbf4.com/act/files/tag.min.js?z=10623091';
+      s.setAttribute('data-cfasync', 'false');
+      s.async = true;
+      document.body.appendChild(s);
+    }
+
+    // Cargar scripts agresivos con control de frecuencia (1 vez por sesión)
+    function loadAggressiveAds() {
+      if (!sessionStorage.getItem('_pop_loaded')) {
+        sessionStorage.setItem('_pop_loaded', '1');
+        (function(s) {
+          s.dataset.zone = '10623086';
+          s.src = 'https://nap5k.com/tag.min.js';
+        })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
+      }
+      if (!sessionStorage.getItem('_vig_loaded')) {
+        sessionStorage.setItem('_vig_loaded', '1');
+        (function(s) {
+          s.dataset.zone = '10623090';
+          s.src = 'https://gizokraijaw.net/vignette.min.js';
+        })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
+      }
+    }
+
+    // En in-app browsers no cargar scripts agresivos
+    if (isRestricted) { return; }
+
+    // Gestión de consentimiento push
+    var pushConsent = localStorage.getItem('pushConsent');
+    var banner = document.getElementById('push-consent-banner');
+
+    if (pushConsent === 'accepted') {
+      loadMonetagPush();
+    } else if (pushConsent !== 'denied') {
+      if (banner) banner.style.display = 'flex';
+    }
+
+    var btnAccept = document.getElementById('push-accept');
+    var btnDeny   = document.getElementById('push-deny');
+
+    if (btnAccept) {
+      btnAccept.addEventListener('click', function() {
+        localStorage.setItem('pushConsent', 'accepted');
+        if (banner) banner.style.display = 'none';
+        loadMonetagPush();
+      });
+    }
+    if (btnDeny) {
+      btnDeny.addEventListener('click', function() {
+        localStorage.setItem('pushConsent', 'denied');
+        if (banner) banner.style.display = 'none';
+      });
+    }
+
+    // Lazy loading: cargar ads agresivos solo tras primer scroll o después de 4s
+    var adsLoaded = false;
+    function triggerAds() {
+      if (adsLoaded) return;
+      adsLoaded = true;
+      window.removeEventListener('scroll', triggerAds);
+      loadAggressiveAds();
+    }
+    window.addEventListener('scroll', triggerAds, { passive: true });
+    setTimeout(triggerAds, 4000);
+  })();
+  </script>
+
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
   <script

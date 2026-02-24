@@ -1,50 +1,54 @@
 import os
 from PIL import Image
 
-def remove_fake_background(image_path):
+def remove_background_advanced(image_path):
     print(f"Procesando: {image_path}")
-    img = Image.open(image_path).convert("RGBA")
-    datas = img.getdata()
+    try:
+        img = Image.open(image_path).convert("RGBA")
+        datas = img.getdata()
 
-    new_data = []
-    # Colores comunes de "Falso PNG" y blanco puro
-    # Blanco, Gris claro (varios tonos de cuadricula)
-    targets = [
-        (255, 255, 255), # Blanco
-        (204, 204, 204), # Gris común 1
-        (192, 192, 192), # Gris común 2
-        (200, 200, 200), # Gris común 3
-        (240, 240, 240), # Casi blanco
-    ]
-    
-    threshold = 15 # Tolerancia para colores similares
-
-    for item in datas:
-        # Si el pixel es muy similar a alguno de nuestros objetivos, lo hacemos transparente
-        is_bg = False
-        for target in targets:
-            if abs(item[0] - target[0]) < threshold and \
-               abs(item[1] - target[1]) < threshold and \
-               abs(item[2] - target[2]) < threshold:
-                is_bg = True
-                break
+        new_data = []
+        # Umbral para detectar blanco o gris muy claro (típico de fondos o cuadrículas)
+        # Si los tres canales R, G, B son mayores a 220, es probable que sea fondo
+        # O si son muy similares entre sí (grises) y están en el rango de la cuadrícula
         
-        if is_bg:
-            new_data.append((255, 255, 255, 0))
-        else:
-            new_data.append(item)
+        for item in datas:
+            # item es (R, G, B, A)
+            r, g, b, a = item
+            
+            # 1. Detectar Blanco Puro o casi blanco
+            if r > 235 and g > 235 and b > 235:
+                new_data.append((255, 255, 255, 0))
+            # 2. Detectar Grises de cuadrícula fake PNG (usualmente alrededor de 190-210)
+            elif 180 < r < 225 and 180 < g < 225 and 180 < b < 225 and abs(r-g) < 5 and abs(g-b) < 5:
+                new_data.append((255, 255, 255, 0))
+            else:
+                new_data.append(item)
 
-    img.putdata(new_data)
-    img.save(image_path, "PNG")
-    print(f"Finalizado: {image_path}")
+        img.putdata(new_data)
+        
+        # Guardar siempre como PNG para mantener transparencia
+        base_path = os.path.splitext(image_path)[0]
+        output_path = base_path + ".png"
+        
+        img.save(output_path, "PNG")
+        
+        # Si el original era webp, lo borramos para no tener duplicados
+        if image_path.lower().endswith(".webp"):
+            os.remove(image_path)
+            
+        print(f"Finalizado: {output_path}")
+    except Exception as e:
+        print(f"Error procesando {image_path}: {e}")
 
 # Procesar TODA la carpeta public/rewards
 folder_path = os.path.join(os.getcwd(), "public", "rewards")
 if os.path.exists(folder_path):
     for filename in os.listdir(folder_path):
-        if filename.lower().endswith(".png"):
+        if filename.lower().endswith((".png", ".webp")):
             full_path = os.path.join(folder_path, filename)
-            remove_fake_background(full_path)
+            remove_background_advanced(full_path)
 else:
     print(f"No se encontró la carpeta: {folder_path}")
+
 
